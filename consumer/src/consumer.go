@@ -2,8 +2,8 @@ package consumer
 
 import (
 	"context"
-	"golang-kafka-consumer/src/constant"
 	"golang-kafka-consumer/src/dto"
+	"golang-kafka-lib/constant"
 	"log"
 
 	"github.com/segmentio/kafka-go"
@@ -17,7 +17,7 @@ func FetchMessage(ctx context.Context, opt dto.ConsumerOpt) (err error) {
 
 	for i := 0; i < retryCount; i++ {
 		r := kafka.NewReader(kafka.ReaderConfig{
-			Brokers:               []string{constant.KafkaBroker},
+			Brokers:               constant.GetBrokers(),
 			Topic:                 constant.KafkaTopics,
 			MaxBytes:              10e6, // 10MB
 			StartOffset:           kafka.LastOffset,
