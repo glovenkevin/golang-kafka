@@ -21,13 +21,17 @@ func FetchMessage(ctx context.Context, opt dto.ConsumerOpt) (err error) {
 
 	for i := 0; i < retryCount; i++ {
 		r := kafka.NewReader(kafka.ReaderConfig{
-			Brokers:               constant.GetBrokers(),
+			Brokers:               []string{constant.KafkaBrokerSingle},
 			Topic:                 constant.KafkaTopics,
+			GroupID:               constant.KafkaGroupId,
 			MaxBytes:              10e6, // 10MB
 			StartOffset:           kafka.LastOffset,
-			GroupID:               constant.KafkaTopics,
 			WatchPartitionChanges: true,
-			IsolationLevel:        kafka.ReadCommitted,
+			Dialer:                kafka.DefaultDialer,
+			GroupBalancers: []kafka.GroupBalancer{
+				kafka.RangeGroupBalancer{},
+				kafka.RoundRobinGroupBalancer{},
+			},
 
 			// Logger:      log.Default(),
 			ErrorLogger: log.Default(),
