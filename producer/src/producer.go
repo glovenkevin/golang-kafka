@@ -39,7 +39,7 @@ func ProduceMessage(ctx context.Context) (err error) {
 func ProduceMessages(ctx context.Context, req dto.ProduceMessagesOpt) (err error) {
 	wr := kafka.NewWriter(kafka.WriterConfig{
 		Dialer:  kafka.DefaultDialer,
-		Brokers: constant.GetBrokers(),
+		Brokers: []string{constant.KafkaBrokerSingle},
 		Topic:   constant.KafkaTopics,
 
 		Logger:       log.Default(),

@@ -1,6 +1,8 @@
 package constant
 
 const (
+	KafkaBrokerSingle = "localhost:19092"
+
 	KafkaBroker01 = "localhost:19092"
 	KafkaBroker02 = "localhost:29092"
 
